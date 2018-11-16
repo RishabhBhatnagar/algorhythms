@@ -1,3 +1,20 @@
+class ErrorCheck:
+    """
+      Assumptions : 
+          first parameter of sorting function is array to be sorted.
+    """
+    
+    def __init__(self, sort_function):
+        self.sort_function = sort_function
+        
+    def __call__(self, *params, **kwargs):
+        if not isinstance(params[0], __import__("collections").Iterable):
+            print("Expected an iterable, {} found".format(type(params[0])))
+            return None
+        else:
+            return self.sort_function(*params, **kwargs)
+
+@ErrorCheck
 def bubble_sort(array):
     n = len(array)
     for i in range(n):
@@ -12,6 +29,7 @@ def __merge(a, b):
             return [a[0]] + __merge(a[1:], b)
     return a + b
 
+@ErrorCheck
 def merge_sort(array):
     """
         Returns a sorted array.
