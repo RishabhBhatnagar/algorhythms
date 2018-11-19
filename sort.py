@@ -41,8 +41,10 @@ def bubble_sort(array):
 # Merge sort
 def __merge(a, b):
     if a and b:
-        if a[0] > b[0]:
+        if a[0] < b[0]:
             return [a[0]] + __merge(a[1:], b)
+        else:
+            return [b[0]] + __merge(a, b[1:])
     return a + b
 
 @ErrorCheck
@@ -82,8 +84,16 @@ def quick_sort(array):
     return __quick_sort(array, 0, len(array)-1)
 # end quick sort
 
-if __name__ == "__main__":
-    a = (1, 3, 2, 3)
-    b = "iokszueg"
-    print(bubble_sort(a))
-    print(quick_sort(b))
+
+# insertion sort
+@ErrorCheck
+def insertion_sort(array):
+    for i in range(1, len(array)):
+        key = array[i]
+        j = i - 1
+        while j >= 0 and array[j] > key:
+            array[j+1] = array[j]
+            j -= 1
+        array[j+1] = key
+    return array
+# end insertion sort
