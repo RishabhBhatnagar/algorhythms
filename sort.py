@@ -293,4 +293,51 @@ def counting_sort(array):
 # end counting sort
 
 
+# tim sort
+
+# end tim sort
+
+
+# tree sort
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+def __insert(root, node):
+    if root is None:
+        root = node
+
+    else:
+        if root.data > node.data:
+            if root.left is None:
+                root.left = node
+            else:
+                __insert(root.left, node)
+        else:
+            if root.right is None:
+                root.right = node
+            else:
+                __insert(root.right, node)
+arr = []
+def __in_order_traversal(root):
+    
+    if not root:
+        return
+    else:
+        __in_order_traversal(root.left)
+        arr.append(root.data)
+        __in_order_traversal(root.right)
+    return arr
+
+def tree_sort(array):
+    root = Node(array[0])
+    for i in range(1, len(array)):
+        __insert(root, Node(array[i]))
+    return __in_order_traversal(root)
+
+# end tree sort
+
+
 
