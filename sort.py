@@ -98,6 +98,7 @@ def insertion_sort(array):
     return array
 # end insertion sort
 
+
 # selection sort
 @ErrorCheck
 def selection_sort(array):
@@ -225,6 +226,71 @@ def pancake_sort(array):
         cur -= 1
     return array
 # end pancake sort
+
+
+# shell sort
+@ErrorCheck
+def shell_sort(array):
+    length = len(array)
+    #initalize gap to mid of the array
+    gap = length // 2
+
+    while gap > 0:
+        for i in range(gap, length):
+            temp = array[i]
+            j = i
+
+            while j >= gap and array[j - gap] > temp:
+                array[j] = array[j - gap]
+                j -= gap
+
+            array[j] = temp
+        gap = gap // 2
+    return array
+# end shell sort
+
+
+# bucket sort
+@ErrorCheck
+def bucket_sort(array):
+    B = [list() for _ in range(10)]
+
+    for i, x in enumerate(array):
+        B[int(x * len(B))].append(x)
+
+    output = []
+
+    for buckets in B:
+        output += insertion_sort(buckets)
+
+    return output
+# end bucket sort
+
+
+# counting sort
+@ErrorCheck
+def counting_sort(array):
+    
+    #intitalize output final array
+    output = [0] * 256
+
+    count = [0] * 256
+
+    #storing the count of each character
+    for x in array:
+        count[ord(str(x))] += 1
+
+    for i in range(256):
+        count[i] += count[i - 1]
+
+    for i in range(len(array)):
+        output[ count[ord(str(array[i]))] - 1 ] = array[i]
+        count[ord(str(array[i]))] -= 1
+
+    for i in range(len(array)):
+        array[i] = output[i]
+    return array
+# end counting sort
 
 
 
