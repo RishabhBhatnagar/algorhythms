@@ -39,13 +39,13 @@ def bubble_sort(array):
 
 
 # Merge sort
-def __merge(a, b):
-    if a and b:
-        if a[0] < b[0]:
-            return [a[0]] + __merge(a[1:], b)
+def __merge(A, B):
+    if A and B:
+        if A[0] < B[0]:
+            return [A[0]] + __merge(A[1:], B)
         else:
-            return [b[0]] + __merge(a, b[1:])
-    return a + b
+            return [B[0]] + __merge(A, B[1:])
+    return A + B
 
 @ErrorCheck
 def merge_sort(array):
@@ -62,15 +62,15 @@ def merge_sort(array):
 
 
 # quick sort
-def __partition(a, l, r):
-    key = a[r]
+def __partition(A, l, r):
+    key = A[r]
     i = l - 1
     for j in range(l, r):   # upto r-1
-        if a[j] < key:
+        if A[j] < key:
             i += 1
-            a[i], a[j] = a[j], a[i]
+            A[i], A[j] = A[j], A[i]
     i += 1
-    a[i], a[r] = a[r], a[i]
+    A[i], A[r] = A[r], A[i]
     return i
 
 @ErrorCheck
@@ -97,3 +97,200 @@ def insertion_sort(array):
         array[j+1] = key
     return array
 # end insertion sort
+
+
+# selection sort
+@ErrorCheck
+def selection_sort(array):
+    for i in range(len(array)):
+        min_index = i
+        for j in range(i + 1, len(array)):
+            if array[min_index] > array[j]:
+                min_index = j
+        array[i], array[min_index] = array[min_index], array[i]
+    return array
+# end selection sort
+
+# heap sort
+def __build_max_heap(A):
+    heap_size = len(A)
+    for i in range(int(len(A)/2), -1, -1):
+        __max_heapify(A, i, heap_size)
+    return heap_size
+
+def __max_heapify(A, i, heap_size):
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < heap_size and A[l] > A[i]:
+        largest = l
+    else:
+        largest = i
+
+    if r < heap_size and A[r] > A[largest]:
+        largest = r
+
+    if largest != i:
+        A[i], A[largest] = A[largest], A[i]
+        __max_heapify(A, largest, heap_size)
+    return A
+
+@ErrorCheck
+def heap_sort(array):
+    heap_size = __build_max_heap(array)
+
+    for i in range(len(array)-1, -1, -1):
+        array[0], array[i] = array[i], array[0]
+        heap_size -= 1
+        array = __max_heapify(array, 0, heap_size)
+    return array
+# end heap sort
+
+
+#radix sort
+def __counting_sort(A, mod): 
+  
+    n = len(A) 
+    output = [0] * n
+    count = [0] * 10
+    
+    for i in range(0, n): 
+        index = A[i] // mod 
+        count[index % 10] += 1
+  
+    for i in range(1,10): 
+        count[i] += count[i-1] 
+  
+    i = n-1
+    while i>=0: 
+        index = A[i] // mod 
+        output[ count[index % 10] - 1] = A[i] 
+        count[index % 10] -= 1
+        i -= 1
+  
+    i = 0
+    for i in range(0,len(A)): 
+        A[i] = output[i] 
+
+    return A
+  
+@ErrorCheck
+def radix_sort(array): 
+    max_of_list = max(array) 
+
+    mod = 1
+    while max_of_list / mod > 0: 
+        array = __counting_sort(array, mod) 
+        mod *= 10
+    return array
+# end radix sort
+
+
+# comb_sort
+@ErrorCheck
+def comb_sort(array):
+    n = len(array)
+    SHRINK_FACTOR = 1.3
+    #initialize the gap to length of array
+    gap = n
+
+    swapped = True
+
+    while gap > 1 or swapped:
+        #finding next gap
+        gap = int(float(gap) / SHRINK_FACTOR)
+
+        swapped = False
+
+        for i in range(0, n - gap):
+            if array[i] > array[i + gap]:
+                array[i], array[i + gap] = array[i + gap], array[i]
+                swapped = True
+    return array
+# end comb sort
+
+
+# pancake sort
+@ErrorCheck
+def pancake_sort(array):
+    cur = len(array)
+
+    while cur > 1:
+        # find the index of the max element
+        mi = array.index(max(array[:cur]))
+        # reverse list from 0 to mi
+        array = array[mi::-1] + array[mi + 1:]
+        # reverse the whole list
+        array = array[cur - 1::-1] + array[cur:]
+
+        cur -= 1
+    return array
+# end pancake sort
+
+
+# shell sort
+@ErrorCheck
+def shell_sort(array):
+    length = len(array)
+    #initalize gap to mid of the array
+    gap = length // 2
+
+    while gap > 0:
+        for i in range(gap, length):
+            temp = array[i]
+            j = i
+
+            while j >= gap and array[j - gap] > temp:
+                array[j] = array[j - gap]
+                j -= gap
+
+            array[j] = temp
+        gap = gap // 2
+    return array
+# end shell sort
+
+
+# bucket sort
+@ErrorCheck
+def bucket_sort(array):
+    B = [list() for _ in range(10)]
+
+    for i, x in enumerate(array):
+        B[int(x * len(B))].append(x)
+
+    output = []
+
+    for buckets in B:
+        output += insertion_sort(buckets)
+
+    return output
+# end bucket sort
+
+
+# counting sort
+@ErrorCheck
+def counting_sort(array):
+    
+    #intitalize output final array
+    output = [0] * 256
+
+    count = [0] * 256
+
+    #storing the count of each character
+    for x in array:
+        count[ord(str(x))] += 1
+
+    for i in range(256):
+        count[i] += count[i - 1]
+
+    for i in range(len(array)):
+        output[ count[ord(str(array[i]))] - 1 ] = array[i]
+        count[ord(str(array[i]))] -= 1
+
+    for i in range(len(array)):
+        array[i] = output[i]
+    return array
+# end counting sort
+
+
+
