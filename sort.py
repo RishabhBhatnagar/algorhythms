@@ -134,6 +134,7 @@ def __max_heapify(A, i, heap_size):
         __max_heapify(A, largest, heap_size)
     return A
 
+@ErrorCheck
 def heap_sort(array):
     heap_size = __build_max_heap(array)
 
@@ -149,11 +150,8 @@ def heap_sort(array):
 def __counting_sort(A, mod): 
   
     n = len(A) 
-
     output = [0] * n
-  
     count = [0] * 10
-  
     
     for i in range(0, n): 
         index = A[i] // mod 
@@ -174,9 +172,8 @@ def __counting_sort(A, mod):
         A[i] = output[i] 
 
     return A
-
   
-
+@ErrorCheck
 def radix_sort(array): 
     max_of_list = max(array) 
 
@@ -189,6 +186,7 @@ def radix_sort(array):
 
 
 # comb_sort
+@ErrorCheck
 def comb_sort(array):
     n = len(array)
     SHRINK_FACTOR = 1.3
@@ -209,6 +207,24 @@ def comb_sort(array):
                 swapped = True
     return array
 # end comb sort
+
+
+# pancake sort
+@ErrorCheck
+def pancake_sort(array):
+    cur = len(array)
+
+    while cur > 1:
+        # find the index of the max element
+        mi = array.index(max(array[:cur]))
+        # reverse list from 0 to mi
+        array = array[mi::-1] + array[mi + 1:]
+        # reverse the whole list
+        array = array[cur - 1::-1] + array[cur:]
+
+        cur -= 1
+    return array
+# end pancake sort
 
 
 
