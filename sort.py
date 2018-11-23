@@ -188,3 +188,27 @@ def radix_sort(array):
 # end radix sort
 
 
+# comb_sort
+def comb_sort(array):
+    n = len(array)
+    SHRINK_FACTOR = 1.3
+    #initialize the gap to length of array
+    gap = n
+
+    swapped = True
+
+    while gap > 1 or swapped:
+        #finding next gap
+        gap = int(float(gap) / SHRINK_FACTOR)
+
+        swapped = False
+
+        for i in range(0, n - gap):
+            if array[i] > array[i + gap]:
+                array[i], array[i + gap] = array[i + gap], array[i]
+                swapped = True
+    return array
+# end comb sort
+
+
+
