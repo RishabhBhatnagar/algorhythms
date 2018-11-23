@@ -293,4 +293,92 @@ def counting_sort(array):
 # end counting sort
 
 
+# tim sort
+RUN = 32
+def __merge_tim(A, p, q, r):
+    L = A[p:q]
+    R = A[q:r]
+    i = 0
+    j = 0
+    k = p
+    for l in range(k, r):
+        if j >= len(R) or (i < len(L) and L[i] < R[j]):
+            A[l] = L[i]
+            i = i + 1
+        else:
+            A[l] = R[j]
+            j = j + 1
+    return A
+
+def __insertion_sort(A, left, right):
+    for i in range(left + 1, right + 1):
+        key = A[i]
+        #Insert A[j] into the sorted sequence A[1....j-1]
+        j = i - 1
+
+        while j >= left and A[j] > key:
+            A[j + 1] = A[j]
+            j -= 1
+
+        A[j + 1] = key
+    return A
+
+@ErrorCheck
+def tim_sort(array):
+    for i in range(0, len(array), RUN):
+        array = __insertion_sort(array, i, min((i + 31), (len(array) - 1)))
+
+    for size in range(RUN, len(array)):
+        for left in range(0, len(array)):
+            mid = left + size - 1
+            right = min((left + 2*size - 1), (len(array) - 1))
+            array = __merge_tim(array, left, mid, right)
+            left += 2*size
+        size *= 2
+    return array
+# end tim sort
+
+# tree sort
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+def __insert(root, node):
+    if root is None:
+        root = node
+
+    else:
+        if root.data > node.data:
+            if root.left is None:
+                root.left = node
+            else:
+                __insert(root.left, node)
+        else:
+            if root.right is None:
+                root.right = node
+            else:
+                __insert(root.right, node)
+arr = []
+def __in_order_traversal(root):
+    
+    if not root:
+        return
+    else:
+        __in_order_traversal(root.left)
+        arr.append(root.data)
+        __in_order_traversal(root.right)
+    return arr
+
+@ErrorCheck
+def tree_sort(array):
+    root = Node(array[0])
+    for i in range(1, len(array)):
+        __insert(root, Node(array[i]))
+    return __in_order_traversal(root)
+
+# end tree sort
+
+
 
