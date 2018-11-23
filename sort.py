@@ -39,13 +39,13 @@ def bubble_sort(array):
 
 
 # Merge sort
-def __merge(a, b):
-    if a and b:
-        if a[0] < b[0]:
-            return [a[0]] + __merge(a[1:], b)
+def __merge(A, B):
+    if A and B:
+        if A[0] < B[0]:
+            return [A[0]] + __merge(A[1:], B)
         else:
-            return [b[0]] + __merge(a, b[1:])
-    return a + b
+            return [B[0]] + __merge(A, B[1:])
+    return A + B
 
 @ErrorCheck
 def merge_sort(array):
@@ -62,15 +62,15 @@ def merge_sort(array):
 
 
 # quick sort
-def __partition(a, l, r):
-    key = a[r]
+def __partition(A, l, r):
+    key = A[r]
     i = l - 1
     for j in range(l, r):   # upto r-1
-        if a[j] < key:
+        if A[j] < key:
             i += 1
-            a[i], a[j] = a[j], a[i]
+            A[i], A[j] = A[j], A[i]
     i += 1
-    a[i], a[r] = a[r], a[i]
+    A[i], A[r] = A[r], A[i]
     return i
 
 @ErrorCheck
@@ -109,5 +109,39 @@ def selection_sort(array):
         array[i], array[min_index] = array[min_index], array[i]
     return array
 # end selection sort
+
+# heap sort
+def __build_max_heap(A):
+    heap_size = len(A)
+    for i in range(int(len(A)/2), -1, -1):
+        __max_heapify(A, i, heap_size)
+    return heap_size
+
+def __max_heapify(A, i, heap_size):
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < heap_size and A[l] > A[i]:
+        largest = l
+    else:
+        largest = i
+
+    if r < heap_size and A[r] > A[largest]:
+        largest = r
+
+    if largest != i:
+        A[i], A[largest] = A[largest], A[i]
+        __max_heapify(A, largest, heap_size)
+    return A
+
+def heap_sort(array):
+    heap_size = __build_max_heap(array)
+
+    for i in range(len(array)-1, -1, -1):
+        array[0], array[i] = array[i], array[0]
+        heap_size -= 1
+        array = __max_heapify(array, 0, heap_size)
+    return array
+# end heap sort
 
 
