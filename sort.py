@@ -384,7 +384,6 @@ class Node:
 
 
 def __insert(root, node):
-
     if root.data > node.data:
         if root.left is None:
             root.left = node
@@ -430,6 +429,7 @@ def sleep_sort(values):
 
     def thread_woke(x):
         sleep_sort.result.append(x)
+
     mx = values[0]
     for v in values:
         if mx < v:
