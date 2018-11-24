@@ -1,6 +1,6 @@
 class ErrorCheck:
     """
-      Assumptions : 
+      arrssumptions : 
           first parameter of sorting function is array to be sorted.
       This class checks for error in the parameters 
       and returns sorted object of given type.
@@ -129,29 +129,29 @@ def selection_sort(array):
 # heap sort
 
 
-def __build_max_heap(A):
-    heap_size = len(A)
-    for i in range(int(len(A) / 2), -1, -1):
-        __max_heapify(A, i, heap_size)
+def __build_max_heap(arr):
+    heap_size = len(arr)
+    for i in range(int(len(arr) / 2), -1, -1):
+        __max_heapify(arr, i, heap_size)
     return heap_size
 
 
-def __max_heapify(A, i, heap_size):
+def __max_heapify(arr, i, heap_size):
     l = 2 * i + 1
     r = 2 * i + 2
 
-    if l < heap_size and A[l] > A[i]:
+    if l < heap_size and arr[l] > arr[i]:
         largest = l
     else:
         largest = i
 
-    if r < heap_size and A[r] > A[largest]:
+    if r < heap_size and arr[r] > arr[largest]:
         largest = r
 
     if largest != i:
-        A[i], A[largest] = A[largest], A[i]
-        __max_heapify(A, largest, heap_size)
-    return A
+        arr[i], arr[largest] = arr[largest], arr[i]
+        __max_heapify(arr, largest, heap_size)
+    return arr
 
 
 @ErrorCheck
@@ -169,13 +169,13 @@ def heap_sort(array):
 
 
 # radix sort
-def __counting_sort(A, mod):
-    n = len(A)
+def __counting_sort(arr, mod):
+    n = len(arr)
     output = [0] * n
     count = [0] * 10
 
     for i in range(0, n):
-        index = A[i] // mod
+        index = arr[i] // mod
         count[index % 10] += 1
 
     for i in range(1, 10):
@@ -183,15 +183,15 @@ def __counting_sort(A, mod):
 
     i = n - 1
     while i >= 0:
-        index = A[i] // mod
-        output[count[index % 10] - 1] = A[i]
+        index = arr[i] // mod
+        output[count[index % 10] - 1] = arr[i]
         count[index % 10] -= 1
         i -= 1
 
-    for i in range(0, len(A)):
-        A[i] = output[i]
+    for i in range(0, len(arr)):
+        arr[i] = output[i]
 
-    return A
+    return arr
 
 
 @ErrorCheck
@@ -328,34 +328,34 @@ def counting_sort(array):
 RUN = 32
 
 
-def __merge_tim(A, p, q, r):
-    la = A[p:q]
-    ra = A[q:r]
+def __merge_tim(arr, p, q, r):
+    la = arr[p:q]
+    ra = arr[q:r]
     i = 0
     j = 0
     k = p
     for l in range(k, r):
         if j >= len(ra) or (i < len(la) and la[i] < ra[j]):
-            A[l] = la[i]
+            arr[l] = la[i]
             i = i + 1
         else:
-            A[l] = ra[j]
+            arr[l] = ra[j]
             j = j + 1
-    return A
+    return arr
 
 
-def __insertion_sort(A, left, right):
+def __insertion_sort(array, left, right):
     for i in range(left + 1, right + 1):
-        key = A[i]
-        # Insert A[j] into the sorted sequence A[1....j-1]
+        key = array[i]
+        # Insert arr[j] into the sorted sequence arr[1....j-1]
         j = i - 1
 
-        while j >= left and A[j] > key:
-            A[j + 1] = A[j]
+        while j >= left and array[j] > key:
+            array[j + 1] = array[j]
             j -= 1
 
-        A[j + 1] = key
-    return A
+        array[j + 1] = key
+    return array
 
 
 @ErrorCheck
