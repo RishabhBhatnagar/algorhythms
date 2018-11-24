@@ -297,13 +297,13 @@ def counting_sort(array):
 # tim sort
 RUN = 32
 def __merge_tim(A, p, q, r):
-    L = A[p:q]
-    R = A[q:r]
+    la = A[p:q]
+    ra = A[q:r]
     i = 0
     j = 0
     k = p
     for l in range(k, r):
-        if j >= len(R) or (i < len(L) and L[i] < R[j]):
+        if j >= len(ra) or (i < len(la) and la[i] < ra[j]):
             A[l] = L[i]
             i = i + 1
         else:
