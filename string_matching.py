@@ -6,6 +6,8 @@ def return_list(match_function):
     return return_list
 
 # start naive  
+
+
 @return_list
 def naive(string, pattern):
     """
@@ -23,15 +25,17 @@ def naive(string, pattern):
 
 
 # kmp-algorithm
-class kmp:
+class KMP:
     def __hash(self, prev_char, next_char):
         """
           removes the hash of prev_char and adds hash of next_char
         """
-        try:
             
     def __call__(self, string, pattern):
         self.prev_hash = None
         
 # kmp-algorithm end
+
+
 print(naive("sajkdugfvkiausgfiagsfugsaiufasiasiasasasjugasiugaisu iasug ", 'as'))
+

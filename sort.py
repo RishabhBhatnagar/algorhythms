@@ -1,8 +1,8 @@
 class ErrorCheck:
     """
-      arrssumptions : 
+      assumptions :
           first parameter of sorting function is array to be sorted.
-      This class checks for error in the parameters 
+      This class checks for error in the parameters
       and returns sorted object of given type.
     """
 
@@ -16,13 +16,12 @@ class ErrorCheck:
             print("Expected an iterable, {} found".format(array_type))
             return None
         else:
-            if isinstance(array, list):
+            if not isinstance(array, list):
                 params = (list(array),) + params[1:]
-
             sorted_array = self.sort_function(*params, **kwargs)
 
             if isinstance(array, str):
-                return "".join(sorted_array)
+                return "".join([str(i) for i in sorted_array])
 
             return array_type(sorted_array)
 
@@ -385,8 +384,7 @@ class Node:
 
 
 def __insert(root, node):
-    if root is None:
-        root = node
+
     if root.data > node.data:
         if root.left is None:
             root.left = node
@@ -399,6 +397,19 @@ def __insert(root, node):
             __insert(root.right, node)
 
 
+arr = []
+
+
+def __in_order_traversal(root):
+    if not root:
+        return
+    else:
+        __in_order_traversal(root.left)
+        arr.append(root.data)
+        __in_order_traversal(root.right)
+    return arr
+
+
 @ErrorCheck
 def tree_sort(array):
     root = Node(array[0])
@@ -408,13 +419,21 @@ def tree_sort(array):
 
 
 # end tree sort
-def __in_order_traversal(root, arr=None):
-    if arr is None:
-        arr = []
-    if not root:
-        return
-    else:
-        __in_order_traversal(root.left, arr)
-        arr += root.data
-        __in_order_traversal(root.right, arr)
-    return arr
+
+
+@ErrorCheck
+def sleep_sort(values):
+    from time import sleep
+    from threading import Timer
+    sleep_sort.result = []
+    values = list(map(int, values))
+
+    def thread_woke(x):
+        sleep_sort.result.append(x)
+    mx = values[0]
+    for v in values:
+        if mx < v:
+            mx = v
+        Timer(v, thread_woke, [v]).start()
+    sleep(mx + 1)
+    return sleep_sort.result
