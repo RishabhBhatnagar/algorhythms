@@ -12,17 +12,16 @@ class ErrorCheck:
     def __call__(self, *params, **kwargs):
         array = params[0]
         array_type = type(array)
-        
         if not isinstance(array, __import__("collections").Iterable):
             print("Expected an iterable, {} found".format(array_type))
             return None
         else:
-            if array_type != type([]):
+            if isinstance(array, list):
                 params = (list(array), ) + params[1:]
             
             sorted_array = self.sort_function(*params, **kwargs)
             
-            if array_type == type(""):
+            if isinstance(array, str):
                 return "".join(sorted_array)
             
             return array_type(sorted_array)
@@ -384,3 +383,4 @@ def tree_sort(array):
 
 
 
+print(tree_sort("djsfgjh"))
