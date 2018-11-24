@@ -75,6 +75,7 @@ def __partition(a, l, r):
     a[i], a[r] = a[r], a[i]
     return i
 
+
 @ErrorCheck
 def quick_sort(array):
     def __quick_sort(array, l, r):
