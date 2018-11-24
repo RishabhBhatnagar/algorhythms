@@ -285,7 +285,7 @@ def counting_sort(array):
         count[i] += count[i - 1]
 
     for i in range(len(array)):
-        output[ count[ord(str(array[i]))] - 1 ] = array[i]
+        output[count[ord(str(array[i]))] - 1] = array[i]
         count[ord(str(array[i]))] -= 1
 
     for i in range(len(array)):
@@ -304,10 +304,10 @@ def __merge_tim(A, p, q, r):
     k = p
     for l in range(k, r):
         if j >= len(ra) or (i < len(la) and la[i] < ra[j]):
-            A[l] = L[i]
+            A[l] = la[i]
             i = i + 1
         else:
-            A[l] = R[j]
+            A[l] = ra[j]
             j = j + 1
     return A
 
