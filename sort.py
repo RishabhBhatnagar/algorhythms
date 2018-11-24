@@ -48,6 +48,7 @@ def __merge(a, b):
             return [b[0]] + __merge(a, b[1:])
     return a + b
 
+
 @ErrorCheck
 def merge_sort(array):
     """
@@ -164,7 +165,7 @@ def __counting_sort(A, mod):
         count[i] += count[i-1] 
   
     i = n-1
-    while i>=0: 
+    while i >= 0:
         index = A[i] // mod 
         output[ count[index % 10] - 1] = A[i] 
         count[index % 10] -= 1
@@ -198,7 +199,7 @@ def comb_sort(array):
     swapped = True
 
     while gap > 1 or swapped:
-        #finding next gap
+        # finding next gap
         gap = int(float(gap) / SHRINK_FACTOR)
 
         swapped = False
