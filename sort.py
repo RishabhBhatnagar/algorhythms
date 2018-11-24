@@ -192,7 +192,7 @@ def radix_sort(array):
 def comb_sort(array):
     n = len(array)
     SHRINK_FACTOR = 1.3
-    #initialize the gap to length of array
+    # initialize the gap to length of array
     gap = n
 
     swapped = True
@@ -277,7 +277,7 @@ def counting_sort(array):
 
     count = [0] * 256
 
-    #storing the count of each character
+    # storing the count of each character
     for x in array:
         count[ord(str(x))] += 1
 
