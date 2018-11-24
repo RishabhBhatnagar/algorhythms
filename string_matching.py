@@ -38,4 +38,3 @@ class KMP:
 
 
 print(naive("sajkdugfvkiausgfiagsfugsaiufasiasiasasasjugasiugaisu iasug ", 'as'))
-
