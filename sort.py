@@ -169,8 +169,7 @@ def __counting_sort(A, mod):
         output[ count[index % 10] - 1] = A[i] 
         count[index % 10] -= 1
         i -= 1
-  
-    i = 0
+
     for i in range(0,len(A)): 
         A[i] = output[i] 
 
