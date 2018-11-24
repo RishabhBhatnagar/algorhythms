@@ -1,7 +1,8 @@
 class ErrorCheck:
     """
       Assumptions : 
-          first parameter of sorting function is array to be sorted.
+          1) first parameter of sorting function is array to be sorted.
+      
       This class checks for error in the parameters 
       and returns sorted object of given type.
     """
@@ -10,19 +11,23 @@ class ErrorCheck:
         self.sort_function = sort_function
         
     def __call__(self, *params, **kwargs):
-        array = params[0]
-        array_type = type(array)
+        array = params[0]            # By assumption 1)
+        array_type = type(array)     # Determining type of an array so that
+                                     # result can be returned in that datatype.
         
         if not isinstance(array, __import__("collections").Iterable):
             print("Expected an iterable, {} found".format(array_type))
             return None
         else:
-            if array_type != type([]):
+            if array_type != type([]):    # Iterable entered is not a list
+                ' modifying params to make array a list. '
                 params = (list(array), ) + params[1:]
             
             sorted_array = self.sort_function(*params, **kwargs)
+            
             if array_type == type(""):
                 return "".join(sorted_array)
+            
             return array_type(sorted_array)
 
 
@@ -53,7 +58,7 @@ def merge_sort(array):
         Returns a sorted array.
         Does not modify the original array.
     """
-    if len(array) <= 1 : return array
+    if len(array) <= 1:return array
     half = len(array) // 2
     left = merge_sort(array[:half])
     right = merge_sort(array[half:])

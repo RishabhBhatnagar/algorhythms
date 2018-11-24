@@ -21,4 +21,17 @@ def naive(string, pattern):
             yield i
 # end naive
 
+
+# kmp-algorithm
+class kmp:
+    def __hash(self, prev_char, next_char):
+        """
+          removes the hash of prev_char and adds hash of next_char
+        """
+        try:
+            
+    def __call__(self, string, pattern):
+        self.prev_hash = None
+        
+# kmp-algorithm end
 print(naive("sajkdugfvkiausgfiagsfugsaiufasiasiasasasjugasiugaisu iasug ", 'as'))
