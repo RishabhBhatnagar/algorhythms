@@ -403,7 +403,7 @@ def __in_order_traversal(root, arr=None):
         return
     else:
         __in_order_traversal(root.left, arr)
-        arr += root.data
+        arr += [root.data]
         __in_order_traversal(root.right, arr)
     return arr
 
