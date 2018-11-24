@@ -396,16 +396,15 @@ def __insert(root, node):
             __insert(root.right, node)
 
 
-arr = []
-
-
-def __in_order_traversal(root):
+def __in_order_traversal(root, arr=None):
+    if arr is None:
+        arr = []
     if not root:
         return
     else:
-        __in_order_traversal(root.left)
-        arr.append(root.data)
-        __in_order_traversal(root.right)
+        __in_order_traversal(root.left, arr)
+        arr += root.data
+        __in_order_traversal(root.right, arr)
     return arr
 
 
@@ -415,8 +414,6 @@ def tree_sort(array):
     for i in range(1, len(array)):
         __insert(root, Node(array[i]))
     return __in_order_traversal(root)
-
-
 # end tree sort
 
 
