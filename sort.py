@@ -387,30 +387,16 @@ class Node:
 def __insert(root, node):
     if root is None:
         root = node
-    else:
-        if root.data > node.data:
-            if root.left is None:
-                root.left = node
-            else:
-                __insert(root.left, node)
+    if root.data > node.data:
+        if root.left is None:
+            root.left = node
         else:
-            if root.right is None:
-                root.right = node
-            else:
-                __insert(root.right, node)
-
-
-arr = []
-
-
-def __in_order_traversal(root):
-    if not root:
-        return
+            __insert(root.left, node)
     else:
-        __in_order_traversal(root.left)
-        arr.append(root.data)
-        __in_order_traversal(root.right)
-    return arr
+        if root.right is None:
+            root.right = node
+        else:
+            __insert(root.right, node)
 
 
 @ErrorCheck
@@ -422,6 +408,13 @@ def tree_sort(array):
 
 
 # end tree sort
-
-
-print(tree_sort("djsfgjh"))
+def __in_order_traversal(root, arr=None):
+    if arr is None:
+        arr = []
+    if not root:
+        return
+    else:
+        __in_order_traversal(root.left, arr)
+        arr += root.data
+        __in_order_traversal(root.right, arr)
+    return arr
