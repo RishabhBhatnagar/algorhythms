@@ -315,7 +315,7 @@ def __merge_tim(A, p, q, r):
 def __insertion_sort(A, left, right):
     for i in range(left + 1, right + 1):
         key = A[i]
-        #Insert A[j] into the sorted sequence A[1....j-1]
+        # Insert A[j] into the sorted sequence A[1....j-1]
         j = i - 1
 
         while j >= left and A[j] > key:
