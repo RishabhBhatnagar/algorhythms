@@ -5,10 +5,10 @@ class ErrorCheck:
       This class checks for error in the parameters 
       and returns sorted object of given type.
     """
-    
+
     def __init__(self, sort_function):
         self.sort_function = sort_function
-        
+
     def __call__(self, *params, **kwargs):
         array = params[0]
         array_type = type(array)
@@ -17,13 +17,13 @@ class ErrorCheck:
             return None
         else:
             if isinstance(array, list):
-                params = (list(array), ) + params[1:]
-            
+                params = (list(array),) + params[1:]
+
             sorted_array = self.sort_function(*params, **kwargs)
-            
+
             if isinstance(array, str):
                 return "".join(sorted_array)
-            
+
             return array_type(sorted_array)
 
 
@@ -36,6 +36,8 @@ def bubble_sort(array):
             if array[j] < array[i]:
                 array[j], array[i] = array[i], array[j]
     return array
+
+
 # end bubble sort
 
 
@@ -55,11 +57,13 @@ def merge_sort(array):
         Returns a sorted array.
         Does not modify the original array.
     """
-    if len(array) <= 1 : return array
+    if len(array) <= 1: return array
     half = len(array) // 2
     left = merge_sort(array[:half])
     right = merge_sort(array[half:])
     return __merge(left, right)
+
+
 # end Merge sort
 
 
@@ -67,7 +71,7 @@ def merge_sort(array):
 def __partition(a, l, r):
     key = a[r]
     i = l - 1
-    for j in range(l, r):   # upto r-1
+    for j in range(l, r):  # upto r-1
         if a[j] < key:
             i += 1
             a[i], a[j] = a[j], a[i]
@@ -81,10 +85,13 @@ def quick_sort(array):
     def __quick_sort(array, l, r):
         if l < r:
             p = __partition(array, l, r)
-            __quick_sort(array, l, p-1)
-            __quick_sort(array, p+1, r)
+            __quick_sort(array, l, p - 1)
+            __quick_sort(array, p + 1, r)
             return array
-    return __quick_sort(array, 0, len(array)-1)
+
+    return __quick_sort(array, 0, len(array) - 1)
+
+
 # end quick sort
 
 
@@ -95,10 +102,12 @@ def insertion_sort(array):
         key = array[i]
         j = i - 1
         while j >= 0 and array[j] > key:
-            array[j+1] = array[j]
+            array[j + 1] = array[j]
             j -= 1
-        array[j+1] = key
+        array[j + 1] = key
     return array
+
+
 # end insertion sort
 
 
@@ -112,14 +121,20 @@ def selection_sort(array):
                 min_index = j
         array[i], array[min_index] = array[min_index], array[i]
     return array
+
+
 # end selection sort
 
+
 # heap sort
+
+
 def __build_max_heap(A):
     heap_size = len(A)
-    for i in range(int(len(A)/2), -1, -1):
+    for i in range(int(len(A) / 2), -1, -1):
         __max_heapify(A, i, heap_size)
     return heap_size
+
 
 def __max_heapify(A, i, heap_size):
     l = 2 * i + 1
@@ -138,53 +153,58 @@ def __max_heapify(A, i, heap_size):
         __max_heapify(A, largest, heap_size)
     return A
 
+
 @ErrorCheck
 def heap_sort(array):
     heap_size = __build_max_heap(array)
 
-    for i in range(len(array)-1, -1, -1):
+    for i in range(len(array) - 1, -1, -1):
         array[0], array[i] = array[i], array[0]
         heap_size -= 1
         array = __max_heapify(array, 0, heap_size)
     return array
+
+
 # end heap sort
 
 
-#radix sort
-def __counting_sort(A, mod): 
-  
-    n = len(A) 
+# radix sort
+def __counting_sort(A, mod):
+    n = len(A)
     output = [0] * n
     count = [0] * 10
-    
-    for i in range(0, n): 
-        index = A[i] // mod 
+
+    for i in range(0, n):
+        index = A[i] // mod
         count[index % 10] += 1
-  
-    for i in range(1,10): 
-        count[i] += count[i-1] 
-  
-    i = n-1
+
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+
+    i = n - 1
     while i >= 0:
-        index = A[i] // mod 
-        output[ count[index % 10] - 1] = A[i] 
+        index = A[i] // mod
+        output[count[index % 10] - 1] = A[i]
         count[index % 10] -= 1
         i -= 1
 
-    for i in range(0,len(A)): 
-        A[i] = output[i] 
+    for i in range(0, len(A)):
+        A[i] = output[i]
 
     return A
-  
+
+
 @ErrorCheck
-def radix_sort(array): 
-    max_of_list = max(array) 
+def radix_sort(array):
+    max_of_list = max(array)
 
     mod = 1
-    while max_of_list / mod > 0: 
-        array = __counting_sort(array, mod) 
+    while max_of_list / mod > 0:
+        array = __counting_sort(array, mod)
         mod *= 10
     return array
+
+
 # end radix sort
 
 
@@ -209,6 +229,8 @@ def comb_sort(array):
                 array[i], array[i + gap] = array[i + gap], array[i]
                 swapped = True
     return array
+
+
 # end comb sort
 
 
@@ -227,6 +249,8 @@ def pancake_sort(array):
 
         cur -= 1
     return array
+
+
 # end pancake sort
 
 
@@ -234,7 +258,7 @@ def pancake_sort(array):
 @ErrorCheck
 def shell_sort(array):
     length = len(array)
-    #initalize gap to mid of the array
+    # initalize gap to mid of the array
     gap = length // 2
 
     while gap > 0:
@@ -249,6 +273,8 @@ def shell_sort(array):
             array[j] = temp
         gap = gap // 2
     return array
+
+
 # end shell sort
 
 
@@ -266,14 +292,15 @@ def bucket_sort(array):
         output += insertion_sort(buckets)
 
     return output
+
+
 # end bucket sort
 
 
 # counting sort
 @ErrorCheck
 def counting_sort(array):
-    
-    #intitalize output final array
+    # intitalize output final array
     output = [0] * 256
 
     count = [0] * 256
@@ -292,6 +319,8 @@ def counting_sort(array):
     for i in range(len(array)):
         array[i] = output[i]
     return array
+
+
 # end counting sort
 
 
@@ -314,6 +343,7 @@ def __merge_tim(A, p, q, r):
             j = j + 1
     return A
 
+
 def __insertion_sort(A, left, right):
     for i in range(left + 1, right + 1):
         key = A[i]
@@ -327,6 +357,7 @@ def __insertion_sort(A, left, right):
         A[j + 1] = key
     return A
 
+
 @ErrorCheck
 def tim_sort(array):
     for i in range(0, len(array), RUN):
@@ -335,11 +366,13 @@ def tim_sort(array):
     for size in range(RUN, len(array)):
         for left in range(0, len(array)):
             mid = left + size - 1
-            right = min((left + 2*size - 1), (len(array) - 1))
+            right = min((left + 2 * size - 1), (len(array) - 1))
             array = __merge_tim(array, left, mid, right)
-            left += 2*size
+            left += 2 * size
         size *= 2
     return array
+
+
 # end tim sort
 
 # tree sort
@@ -349,10 +382,10 @@ class Node:
         self.right = None
         self.data = data
 
+
 def __insert(root, node):
     if root is None:
         root = node
-
     else:
         if root.data > node.data:
             if root.left is None:
@@ -364,9 +397,12 @@ def __insert(root, node):
                 root.right = node
             else:
                 __insert(root.right, node)
+
+
 arr = []
+
+
 def __in_order_traversal(root):
-    
     if not root:
         return
     else:
@@ -375,6 +411,7 @@ def __in_order_traversal(root):
         __in_order_traversal(root.right)
     return arr
 
+
 @ErrorCheck
 def tree_sort(array):
     root = Node(array[0])
@@ -382,8 +419,8 @@ def tree_sort(array):
         __insert(root, Node(array[i]))
     return __in_order_traversal(root)
 
-# end tree sort
 
+# end tree sort
 
 
 print(tree_sort("djsfgjh"))
