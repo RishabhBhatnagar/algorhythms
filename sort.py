@@ -57,7 +57,8 @@ def merge_sort(array):
         Returns a sorted array.
         Does not modify the original array.
     """
-    if len(array) <= 1: return array
+    if len(array) <= 1:
+        return array
     half = len(array) // 2
     left = merge_sort(array[:half])
     right = merge_sort(array[half:])
@@ -81,7 +82,7 @@ def __partition(a, l, r):
 
 
 @ErrorCheck
-def quick_sort(array):
+def quick_sort(a):
     def __quick_sort(array, l, r):
         if l < r:
             p = __partition(array, l, r)
@@ -89,7 +90,7 @@ def quick_sort(array):
             __quick_sort(array, p + 1, r)
             return array
 
-    return __quick_sort(array, 0, len(array) - 1)
+    return __quick_sort(a, 0, len(a) - 1)
 
 
 # end quick sort
@@ -129,29 +130,29 @@ def selection_sort(array):
 # heap sort
 
 
-def __build_max_heap(arr):
-    heap_size = len(arr)
-    for i in range(int(len(arr) / 2), -1, -1):
-        __max_heapify(arr, i, heap_size)
+def __build_max_heap(array):
+    heap_size = len(array)
+    for i in range(int(len(array) / 2), -1, -1):
+        __max_heapify(array, i, heap_size)
     return heap_size
 
 
-def __max_heapify(arr, i, heap_size):
-    l = 2 * i + 1
+def __max_heapify(array, i, heap_size):
+    left = 2 * i + 1
     r = 2 * i + 2
 
-    if l < heap_size and arr[l] > arr[i]:
-        largest = l
+    if left < heap_size and array[left] > array[i]:
+        largest = left
     else:
         largest = i
 
-    if r < heap_size and arr[r] > arr[largest]:
+    if r < heap_size and array[r] > array[largest]:
         largest = r
 
     if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]
-        __max_heapify(arr, largest, heap_size)
-    return arr
+        array[i], array[largest] = array[largest], array[i]
+        __max_heapify(array, largest, heap_size)
+    return array
 
 
 @ErrorCheck
@@ -169,13 +170,13 @@ def heap_sort(array):
 
 
 # radix sort
-def __counting_sort(arr, mod):
-    n = len(arr)
+def __counting_sort(array, mod):
+    n = len(array)
     output = [0] * n
     count = [0] * 10
 
     for i in range(0, n):
-        index = arr[i] // mod
+        index = array[i] // mod
         count[index % 10] += 1
 
     for i in range(1, 10):
@@ -183,15 +184,15 @@ def __counting_sort(arr, mod):
 
     i = n - 1
     while i >= 0:
-        index = arr[i] // mod
-        output[count[index % 10] - 1] = arr[i]
+        index = array[i] // mod
+        output[count[index % 10] - 1] = array[i]
         count[index % 10] -= 1
         i -= 1
 
-    for i in range(0, len(arr)):
-        arr[i] = output[i]
+    for i in range(0, len(array)):
+        array[i] = output[i]
 
-    return arr
+    return array
 
 
 @ErrorCheck
@@ -212,7 +213,7 @@ def radix_sort(array):
 @ErrorCheck
 def comb_sort(array):
     n = len(array)
-    SHRINK_FACTOR = 1.3
+    shrink_factor = 1.3
     # initialize the gap to length of array
     gap = n
 
@@ -220,7 +221,7 @@ def comb_sort(array):
 
     while gap > 1 or swapped:
         # finding next gap
-        gap = int(float(gap) / SHRINK_FACTOR)
+        gap = int(float(gap) / shrink_factor)
 
         swapped = False
 
@@ -281,14 +282,14 @@ def shell_sort(array):
 # bucket sort
 @ErrorCheck
 def bucket_sort(array):
-    B = [list() for _ in range(10)]
+    bucket = [list() for _ in range(10)]
 
     for i, x in enumerate(array):
-        B[int(x * len(B))].append(x)
+        bucket[int(x * len(bucket))].append(x)
 
     output = []
 
-    for buckets in B:
+    for buckets in bucket:
         output += insertion_sort(buckets)
 
     return output
@@ -328,20 +329,20 @@ def counting_sort(array):
 RUN = 32
 
 
-def __merge_tim(arr, p, q, r):
-    la = arr[p:q]
-    ra = arr[q:r]
+def __merge_tim(array, p, q, r):
+    la = array[p:q]
+    ra = array[q:r]
     i = 0
     j = 0
     k = p
     for l in range(k, r):
         if j >= len(ra) or (i < len(la) and la[i] < ra[j]):
-            arr[l] = la[i]
+            array[l] = la[i]
             i = i + 1
         else:
-            arr[l] = ra[j]
+            array[l] = ra[j]
             j = j + 1
-    return arr
+    return array
 
 
 def __insertion_sort(array, left, right):
