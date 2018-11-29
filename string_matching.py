@@ -1,4 +1,4 @@
-# start naive
+# start naive  
 def naive(string, pattern):
     """
     Check against each contiguous look ahead subset of string 
@@ -8,7 +8,7 @@ def naive(string, pattern):
     m = len(string)
     n = len(pattern)
     for i in range(m-n+1):
-        # string[i:i+n] is the subset
+        # string[i:i+n] is the subset.
         if string[i:i+n] == pattern:
             result.append(i)
     return result
@@ -85,4 +85,57 @@ def rabin_karp_matcher(txt, pat):
             if t < 0: 
                 t += q 
     return indexes
+# rabin - karp algorithm end
+
+
+# finite automata
+NO_OF_CHARS = 256
+
+def __getNextState(pat, M, state, x):
+
+  if state < M and x == ord(pat[state]): 
+	return state + 1 # if character is same as next then increment state
+
+  i=0
+  # ns stores the result which is next state 
+  
+  # ns finally contains the longest prefix  
+  # which is also suffix in "P[0..state-1]" 
+  
+  # Start from the largest possible value and  
+  # stop when you find a prefix which is also suffix
+	for ns in range(state, 0, -1): 
+		if ord(pat[ns - 1]) == x: 
+			while(i < ns-1): 
+				if pat[i] != pat[state - ns + 1 + i]: 
+					break
+				i += 1
+			if i == ns - 1: 
+				return ns 
+	return 0
+
+def __computeTF(P, M):
+	TF = [[0 for i in range(NO_OF_CHARS)] for _ in range(M+1)] 
+
+	for state in range(M+1): 
+		for x in range(NO_OF_CHARS): 
+			z = __getNextState(P, M, state, x) 
+			TF[state][x] = z 
+
+	return TF 
+
+def finite_automata(T, P):
+	indexes = []
+	M = len(P) 
+	N = len(T) 
+	TF = __computeTF(P, M)	 
+ 
+	state=0
+	for i in range(N): 
+		state = TF[state][ord(T[i])] 
+		if state == M: 
+			indexes.append(i - M + 1)
+	return indexes
+
+# finite automata end
 
