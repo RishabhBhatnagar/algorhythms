@@ -37,4 +37,42 @@ class KMP:
 # kmp-algorithm end
 
 
-print(naive("sajkdugfvkiausgfiagsfugsaiufasiasiasasasjugasiugaisu iasug ", 'as'))
+# rabin - karp algorithm
+d = 256
+
+@return_list
+def rabin_karp_matcher(txt, pat): 
+    M = len(pat) 
+    N = len(txt) 
+    j = 0
+    p = 0 ; q = 101 
+    t = 0    
+    h = (d**(M-1)) % q
+    indexes = []
+    
+    for i in range(M): 
+        p = (d*p + ord(pat[i])) % q 
+        t = (d*t + ord(txt[i])) % q 
+
+    for i in range(N-M+1):
+        if p == t: 
+            for j in range(M): 
+                if txt[i + j] != pat[j]: 
+                    break
+  
+            j += 1
+ 
+            if j == M: 
+                indexes.append(i)
+
+        if i < N-M: 
+            t = (d*(t - ord(txt[i])*h) + ord(txt[i + M]))%q 
+
+            if t < 0: 
+                t += q 
+    return indexes
+
+# rabin - karp algorithm end
+
+
+print(rabin_karp_matcher("sajkdugfvkiausgfiagsfugsaiufasiasiasasasjugasiugaisuiasug ", 'as'))
