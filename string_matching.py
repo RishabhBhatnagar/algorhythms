@@ -93,11 +93,11 @@ NO_OF_CHARS = 256
 
 def __getNextState(pat, M, state, x):
 
-	if state < M and x == ord(pat[state]): 
-		return state + 1 # if character is same as next then increment state
+  if state < M and x == ord(pat[state]): 
+	return state + 1 # if character is same as next then increment state
 
-	i=0
-	# ns stores the result which is next state 
+  i=0
+  # ns stores the result which is next state 
   
   # ns finally contains the longest prefix  
   # which is also suffix in "P[0..state-1]" 
