@@ -32,11 +32,7 @@ class Point:
         return repr(self.pt)
 
 class GrahamScan:
-    def __init__(self, points):
-        self.points = [Point(point) for point in points]
-        self.algo()
-    
-    def polar_angle(self, p1, p2):
+    def polar_angle(p1, p2):
         from math import degrees, atan
         try:
             m = (p2.y-p1.y)/(p2.x-p1.x)
@@ -44,13 +40,14 @@ class GrahamScan:
             m = __import__('math').inf
         return degrees(atan(m))
     
-    def direction(self, p0, p1, p2):
+    def direction(p0, p1, p2):
         # returns positive if p2 is left to line p0->p1
         # returns negative if p2 is right to line p0->p1
-        if (p1-p0)*(p2-p0) > 0:
-            print('left')
-        else: print('right')
         return (p1-p0)*(p2-p0)
+    
+    def __new__(self, points):
+        self.points = [Point(point) for point in points]
+        return self.algo(self)
     
     def algo(self):
         if len(self.points) < 3:
@@ -78,8 +75,16 @@ class GrahamScan:
             # sorting points based on polar angle
             self.points[1:] = sorted(self.points[1:], key=lambda pt:self.polar_angle(self.points[0], pt))
             
-            print(self.points)
-            self.direction(self.points[1], self.points[2], self.points[3])
+            stack = []
+            
+            # appending first three points
+            stack.append(self.points.pop(0))
+            stack.append(self.points.pop(0))
+            
+            for new_point in self.points:
+                if self.direction(stack[-2], stack[-1], new_point) < 0:
+                    stack.pop()
+                stack.append(new_point)
+            return [point[:] for point in stack] # converting point to list
 
-
-GrahamScan([(0, 0), (1, 4), (3, 2), (3, 3), (4, 1), (2, 3)])
+print(GrahamScan([(0, 0), (1, 4), (3, 2), (3, 3), (4, 1), (2, 3)]))
