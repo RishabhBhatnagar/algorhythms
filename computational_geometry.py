@@ -1,3 +1,6 @@
+# Author: BhatnagarRishabh
+# Created on : 02/12/2018
+
 class Point:
     def __init__(self, pt):
         self.pt = pt
