@@ -35,10 +35,9 @@ class GrahamScan:
             self.points.insert(0, self.points.pop(self.points.index(min_y_point)))
             
             # sorting points based on polar angle
-            self.points = sorted(self.points, key=lambda pt:self.polar_angle(self.points[0], pt))
+            self.points[1:] = sorted(self.points[1:], key=lambda pt:self.polar_angle(self.points[0], pt))
             for i in range(len(self.points)):
                 self.points[i] = list(self.points[i]) + [self.polar_angle(self.points[0], self.points[i])]
-            print(self.points)
             
             
 
