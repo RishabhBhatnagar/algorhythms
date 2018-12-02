@@ -31,6 +31,7 @@ class Point:
     def __repr__(self):
         return repr(self.pt)
 
+
 class GrahamScan:
     def polar_angle(p1, p2):
         from math import degrees, atan
@@ -87,4 +88,6 @@ class GrahamScan:
                 stack.append(new_point)
             return [point[:] for point in stack] # converting point to list
 
-print(GrahamScan([(0, 0), (1, 4), (3, 2), (3, 3), (4, 1), (2, 3)]))
+
+if __name__ == '__main__':
+    print(GrahamScan([(0, 0), (1, 4), (3, 2), (3, 3), (4, 1), (2, 3)]))
